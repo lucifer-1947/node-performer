@@ -1,6 +1,8 @@
 import express from 'express'
 import cluster from 'cluster'
 import process from 'process'
+import os from 'os'
+
 
 const app = express()
 
@@ -30,9 +32,15 @@ app.get('/timer',(req,res)=>{
 
 
 if(cluster.isPrimary){
+   
     console.log("Master[Company] has been started ,  anyone can come and fork🖕🏻 me [Activly 📈Hiring...] at port 3000")
-    cluster.fork()
-    cluster.fork()
+    //Each Core can handle a single process .
+    const NUM_CORES = os.cpus().length
+
+    for(let i = 0;i<NUM_CORES;i++){
+        cluster.fork()
+    }
+    
 }
 else {
 
