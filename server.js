@@ -1,7 +1,5 @@
 import express from 'express'
-import cluster from 'cluster'
 import process from 'process'
-import os from 'os'
 
 
 const app = express()
@@ -9,7 +7,7 @@ const app = express()
 
 
 app.get('/',(req,res)=>{
-    res.send("Performance Example")
+    res.send("Performance Example ⚡️")
 })
 
 function delay(duration){
@@ -24,29 +22,16 @@ function delay(duration){
 }
 
 app.get('/timer',(req,res)=>{
-    delay(9000)
+    delay(100000)
     res.send(`Made Blocking to your request , with non-blocking code.\nBut our worker 🧑🏽‍💼${process.pid} solved that issue and made non-blocing\n Thanks 🤗 to 🧑🏽‍💼${process.pid}`)
 
 })
 
 
 
-if(cluster.isPrimary){
-   
-    console.log("Master[Company] has been started ,  anyone can come and fork🖕🏻 me [Activly 📈Hiring...] at port 3000")
-    //Each Core can handle a single process .
-    const NUM_CORES = os.cpus().length
+console.log(`Hey 🧑🏽‍💼i-${process.pid} got hired as worker`)
 
-    for(let i = 0;i<NUM_CORES;i++){
-        cluster.fork()
-    }
-    
-}
-else {
-
-    console.log(`Hey 🧑🏽‍💼i-${process.pid} got hired as worker`)
-    app.listen(3000, ()=>{
-        console.log('starting to work... at port 3000')
-    })
-}
+app.listen(3000, ()=>{
+    console.log('starting to 👨🏼‍💻work... at port 3000')
+})
 
